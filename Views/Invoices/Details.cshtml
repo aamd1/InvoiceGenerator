@@ -1,81 +1,49 @@
+@using System.Globalization
 @model MyInvoiceGenerator.Models.Invoice
-@{ ViewData["Title"] = Model.InvoiceNumber; Layout = null; }
+@{
+    ViewData["Title"] = Model.InvoiceNumber;
+    Layout = null;
+    var french = string.Equals(Model.Language, "fr", StringComparison.OrdinalIgnoreCase);
+    var culture = french ? CultureInfo.GetCultureInfo("fr-FR") : CultureInfo.GetCultureInfo("en-US");
+    var invoiceTitle = french ? "FACTURE" : "INVOICE";
+    var invoiceNumberLabel = french ? "N° de facture" : "Invoice #";
+    var issueDateLabel = french ? "Date d'émission" : "Issue Date";
+    var dueDateLabel = french ? "Date d'échéance" : "Due Date";
+    var fromLabel = french ? "Émetteur" : "From";
+    var billToLabel = french ? "Facturé à" : "Bill To";
+    var descriptionLabel = french ? "Description" : "Description";
+    var quantityLabel = french ? "Qté" : "Qty";
+    var priceLabel = french ? "Prix" : "Price";
+    var vatLabel = french ? "TVA" : "VAT";
+    var amountLabel = french ? "Montant" : "Amount";
+    var subtotalLabel = french ? "Sous-total" : "Subtotal";
+    var totalLabel = french ? "Total" : "Total";
+    var notesLabel = french ? "Notes" : "Notes";
+    var paymentInformationLabel = french ? "Informations de paiement" : "Payment Information";
+    var beneficiaryLabel = french ? "Bénéficiaire" : "Beneficiary";
+    var paymentTermsLabel = french ? "Conditions de paiement" : "Payment Terms";
+    var thankYou = french ? "Merci pour votre confiance." : "Thank you for your business.";
+}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@(french ? "fr" : "en")">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Invoice - @Model.InvoiceNumber</title>
+    <title>@invoiceTitle - @Model.InvoiceNumber</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body class="invoice-page">
-    <div class="invoice-toolbar no-print">
-        <a class="text-link" asp-action="Index">Back to invoices</a>
-        <button class="button" onclick="window.print()">Print / PDF</button>
-    </div>
+    <div class="invoice-toolbar no-print"><a class="text-link" href="/Invoices">@(french ? "Retour aux factures" : "Back to invoices")</a><div class="invoice-toolbar-actions"><label class="language-picker">@(french ? "Langue" : "Language")<select onchange="window.location.href='?id=@Model.Id&language='+this.value"><option value="en" selected="@(Model.Language == "en" ? "selected" : null)">English</option><option value="fr" selected="@(Model.Language == "fr" ? "selected" : null)">Français</option></select></label><button class="button" onclick="window.print()">@(french ? "Imprimer / PDF" : "Print / PDF")</button></div></div>
     <main class="invoice">
-        <header class="top-header">
-            <div class="invoice-heading">
-                <h1>INVOICE</h1>
-                <div class="invoice-info">
-                    <div><span>Invoice #</span><strong>@Model.InvoiceNumber</strong></div>
-                    <div><span>Issue Date</span><strong>@Model.IssueDate.ToString("MMMM d, yyyy")</strong></div>
-                    <div><span>Due Date</span><strong>@Model.DueDate.ToString("MMMM d, yyyy")</strong></div>
-                </div>
-            </div>
-        </header>
+        <header class="top-header"><div class="invoice-heading"><h1>@invoiceTitle</h1><div class="invoice-info"><div><span>@invoiceNumberLabel</span><strong>@Model.InvoiceNumber</strong></div><div><span>@issueDateLabel</span><strong>@Model.IssueDate.ToString("D", culture)</strong></div><div><span>@dueDateLabel</span><strong>@Model.DueDate.ToString("D", culture)</strong></div></div></div></header>
         <section class="details">
-            <div>
-                <h3>From</h3>
-                <p><strong>@Model.CompanyName</strong></p>
-                @if (!string.IsNullOrWhiteSpace(Model.CompanyIdNumber))
-                {
-                    <p>ID: @Model.CompanyIdNumber</p>
-                }
-                <p>@Model.CompanyStreetNumber @Model.CompanyStreet</p>
-                <p>@Model.CompanyStreetLine2</p>
-                <p>@Model.CompanyPostalCode @Model.CompanyCity</p>
-                <p>@Model.CompanyCountry</p>
-                <p>@Model.CompanyEmail</p>
-                <p>@Model.CompanyPhone</p>
-            </div>
-            <div class="client">
-                <h3>Bill To</h3>
-                <p><strong>@Model.ClientName</strong></p>
-                @if (!string.IsNullOrWhiteSpace(Model.ClientIdNumber))
-                {
-                    <p>ID: @Model.ClientIdNumber</p>
-                }
-                <p>@Model.ClientStreetNumber @Model.ClientStreet</p>
-                <p>@Model.ClientStreetLine2</p>
-                <p>@Model.ClientPostalCode @Model.ClientCity</p>
-                <p>@Model.ClientCountry</p>
-                <p>@Model.ClientEmail</p>
-                <p>@Model.ClientPhone</p>
-            </div>
+            <div><h3>@fromLabel</h3><p><strong>@Model.CompanyName</strong></p>@if (!string.IsNullOrWhiteSpace(Model.CompanyIdNumber)) { <p>ID: @Model.CompanyIdNumber</p> }<p>@Model.CompanyStreetNumber @Model.CompanyStreet</p><p>@Model.CompanyStreetLine2</p><p>@Model.CompanyPostalCode @Model.CompanyCity</p><p>@Model.CompanyCountry</p><p>@Model.CompanyEmail</p><p>@Model.CompanyPhone</p></div>
+            <div class="client"><h3>@billToLabel</h3><p><strong>@Model.ClientName</strong></p>@if (!string.IsNullOrWhiteSpace(Model.ClientIdNumber)) { <p>ID: @Model.ClientIdNumber</p> }<p>@Model.ClientStreetNumber @Model.ClientStreet</p><p>@Model.ClientStreetLine2</p><p>@Model.ClientPostalCode @Model.ClientCity</p><p>@Model.ClientCountry</p><p>@Model.ClientEmail</p><p>@Model.ClientPhone</p></div>
         </section>
-        <table>
-            <thead><tr><th class="description-column">Description</th><th class="numeric-column">Qty</th><th class="numeric-column">Price</th><th class="numeric-column">VAT</th><th class="numeric-column">Amount</th></tr></thead>
-            <tbody>
-            @foreach (var item in Model.Items)
-            {
-                <tr><td><div class="item-name">@item.Description</div><div class="item-description">@item.Details</div></td><td class="numeric-column">@item.Quantity.ToString("0.##")</td><td class="numeric-column">€@item.UnitPrice.ToString("N2")</td><td class="numeric-column">@item.VatRate.ToString("0.##")%</td><td class="numeric-column">€@item.Amount.ToString("N2")</td></tr>
-            }
-            </tbody>
-        </table>
-        <section class="summary">
-            <div class="summary-row"><span>Subtotal</span><span>€@Model.Subtotal.ToString("N2")</span></div>
-            <div class="summary-row"><span>VAT (@Model.VatRate.ToString("0.##")%)</span><span>€@Model.VatAmount.ToString("N2")</span></div>
-            <div class="summary-row total"><span>Total</span><span>€@Model.Total.ToString("N2")</span></div>
-        </section>
-        <section class="notes">
-            <h3>Notes</h3>
-            <p class="pre-line">@Model.Notes</p>
-        </section>
-        <footer class="footer">
-            <div><strong>Payment Information</strong><br />Beneficiary: @Model.BeneficiaryName<br />IBAN: @Model.Iban<br />BIC: @Model.Bic</div>
-            <div><strong>Payment Terms</strong><br /><span class="pre-line">@Model.PaymentTerms</span><br /><br />Thank you for your business.</div>
-        </footer>
+        <table><thead><tr><th class="description-column">@descriptionLabel</th><th class="numeric-column">@quantityLabel</th><th class="numeric-column">@priceLabel</th><th class="numeric-column">@vatLabel</th><th class="numeric-column">@amountLabel</th></tr></thead><tbody>@foreach (var item in Model.Items) { <tr><td><div class="item-name">@item.Description</div><div class="item-description">@item.Details</div></td><td class="numeric-column">@item.Quantity.ToString("0.##")</td><td class="numeric-column">€@item.UnitPrice.ToString("N2", culture)</td><td class="numeric-column">@item.VatRate.ToString("0.##", culture)%</td><td class="numeric-column">€@item.Amount.ToString("N2", culture)</td></tr> }</tbody></table>
+        <section class="summary"><div class="summary-row"><span>@subtotalLabel</span><span>€@Model.Subtotal.ToString("N2", culture)</span></div><div class="summary-row"><span>@vatLabel (@Model.VatRate.ToString("0.##", culture)%)</span><span>€@Model.VatAmount.ToString("N2", culture)</span></div><div class="summary-row total"><span>@totalLabel</span><span>€@Model.Total.ToString("N2", culture)</span></div></section>
+        <section class="notes"><h3>@notesLabel</h3><p class="pre-line">@Model.Notes</p></section>
+        <footer class="footer"><div><strong>@paymentInformationLabel</strong><br />@beneficiaryLabel: @Model.BeneficiaryName<br />IBAN: @Model.Iban<br />BIC: @Model.Bic</div><div><strong>@paymentTermsLabel</strong><br /><span class="pre-line">@Model.PaymentTerms</span><br /><br />@thankYou</div></footer>
     </main>
 </body>
 </html>

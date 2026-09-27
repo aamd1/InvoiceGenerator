@@ -6,6 +6,7 @@ public class Invoice
 {
     public int Id { get; set; }
     [Required, StringLength(30)] public string InvoiceNumber { get; set; } = "";
+    [Required, StringLength(2)] public string Language { get; set; } = "en";
     [DataType(DataType.Date)] public DateTime IssueDate { get; set; } = DateTime.Today;
     [DataType(DataType.Date)] public DateTime DueDate { get; set; } = DateTime.Today.AddDays(14);
     [Required, StringLength(120)] public string CompanyName { get; set; } = "Your Company Ltd.";
@@ -58,6 +59,7 @@ public class InvoiceSettings
 {
     public int Id { get; set; }
     [StringLength(30)] public string InvoiceNumberPrefix { get; set; } = "INV-";
+    [Required, StringLength(2)] public string Language { get; set; } = "en";
     public int DueDays { get; set; } = 14;
     [StringLength(120)] public string CompanyName { get; set; } = "Your Company Ltd.";
     [StringLength(50)] public string CompanyIdNumber { get; set; } = "";

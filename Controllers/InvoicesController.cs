@@ -18,6 +18,7 @@ public class InvoicesController(InvoiceDbContext db) : Controller
         var invoice = new Invoice
         {
             InvoiceNumber = $"{defaults.InvoiceNumberPrefix}{DateTime.UtcNow:yyyyMMddHHmmss}",
+            Language = defaults.Language == "fr" ? "fr" : "en",
             DueDate = DateTime.Today.AddDays(defaults.DueDays),
             CompanyName = defaults.CompanyName,
             CompanyIdNumber = defaults.CompanyIdNumber,
@@ -70,9 +71,11 @@ public class InvoicesController(InvoiceDbContext db) : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Details(int id)
+    public async Task<IActionResult> Details(int id, string? language)
     {
         var invoice = await db.Invoices.Include(item => item.Items).SingleOrDefaultAsync(item => item.Id == id);
-        return invoice is null ? NotFound() : View(invoice);
+        if (invoice is null) return NotFound();
+        if (language is "en" or "fr") invoice.Language = language;
+        return View(invoice);
     }
 }

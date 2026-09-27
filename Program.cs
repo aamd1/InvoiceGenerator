@@ -38,6 +38,7 @@ using (var scope = app.Services.CreateScope())
         db.InvoiceSettings.Add(new InvoiceSettings
         {
             CompanyName = latestInvoice?.CompanyName ?? "Your Company Ltd.",
+            Language = latestInvoice?.Language ?? "en",
             CompanyIdNumber = latestInvoice?.CompanyIdNumber ?? "",
             CompanyEmail = latestInvoice?.CompanyEmail ?? "",
             CompanyStreetLine2 = latestInvoice?.CompanyStreetLine2 ?? "",
