@@ -42,11 +42,11 @@
             </div>
         </section>
         <table>
-            <thead><tr><th style="width: 50%;">Description</th><th class="text-right">Qty</th><th class="text-right">Price</th><th class="text-right">Amount</th></tr></thead>
+            <thead><tr><th class="description-column">Description</th><th class="numeric-column">Qty</th><th class="numeric-column">Price</th><th class="numeric-column">VAT</th><th class="numeric-column">Amount</th></tr></thead>
             <tbody>
             @foreach (var item in Model.Items)
             {
-                <tr><td><div class="item-name">@item.Description</div><div class="item-description">@item.Details</div></td><td class="text-right">@item.Quantity.ToString("0.##")</td><td class="text-right">€@item.UnitPrice.ToString("N2")</td><td class="text-right">€@item.Amount.ToString("N2")</td></tr>
+                <tr><td><div class="item-name">@item.Description</div><div class="item-description">@item.Details</div></td><td class="numeric-column">@item.Quantity.ToString("0.##")</td><td class="numeric-column">€@item.UnitPrice.ToString("N2")</td><td class="numeric-column">@item.VatRate.ToString("0.##")%</td><td class="numeric-column">€@item.Amount.ToString("N2")</td></tr>
             }
             </tbody>
         </table>

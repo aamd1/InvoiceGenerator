@@ -14,9 +14,11 @@ public class InvoiceDbContext(DbContextOptions<InvoiceDbContext> options) : DbCo
         modelBuilder.Entity<Invoice>().Property(invoice => invoice.VatRate).HasPrecision(5, 2);
         modelBuilder.Entity<InvoiceItem>().Property(item => item.Quantity).HasPrecision(12, 2);
         modelBuilder.Entity<InvoiceItem>().Property(item => item.UnitPrice).HasPrecision(12, 2);
+        modelBuilder.Entity<InvoiceItem>().Property(item => item.VatRate).HasPrecision(5, 2);
         modelBuilder.Entity<InvoiceSettings>().Property(settings => settings.VatRate).HasPrecision(5, 2);
         modelBuilder.Entity<InvoiceSettings>().Property(settings => settings.ItemQuantity).HasPrecision(12, 2);
         modelBuilder.Entity<InvoiceSettings>().Property(settings => settings.ItemUnitPrice).HasPrecision(12, 2);
+        modelBuilder.Entity<InvoiceSettings>().Property(settings => settings.ItemVatRate).HasPrecision(5, 2);
         modelBuilder.Entity<InvoiceItem>().HasOne(item => item.Invoice).WithMany(invoice => invoice.Items)
             .HasForeignKey(item => item.InvoiceId).OnDelete(DeleteBehavior.Cascade);
     }

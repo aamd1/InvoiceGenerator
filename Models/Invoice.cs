@@ -24,7 +24,7 @@ public class Invoice
     [StringLength(1000)] public string PaymentTerms { get; set; } = "";
     public List<InvoiceItem> Items { get; set; } = new();
     public decimal Subtotal => Items.Sum(item => item.Quantity * item.UnitPrice);
-    public decimal VatAmount => Subtotal * VatRate / 100;
+    public decimal VatAmount => Items.Sum(item => item.VatAmount);
     public decimal Total => Subtotal + VatAmount;
 }
 
@@ -37,7 +37,9 @@ public class InvoiceItem
     [StringLength(500)] public string Details { get; set; } = "";
     [Range(0.01, 1000000)] public decimal Quantity { get; set; } = 1;
     [Range(0, 100000000)] public decimal UnitPrice { get; set; }
+    [Range(0, 100)] public decimal VatRate { get; set; } = 20;
     public decimal Amount => Quantity * UnitPrice;
+    public decimal VatAmount => Amount * VatRate / 100;
 }
 
 public class InvoiceSettings
@@ -63,4 +65,5 @@ public class InvoiceSettings
     [StringLength(500)] public string ItemDetails { get; set; } = "";
     public decimal ItemQuantity { get; set; } = 1;
     public decimal ItemUnitPrice { get; set; }
+    public decimal ItemVatRate { get; set; } = 20;
 }

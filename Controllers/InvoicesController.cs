@@ -39,7 +39,8 @@ public class InvoicesController(InvoiceDbContext db) : Controller
             Description = defaults.ItemDescription,
             Details = defaults.ItemDetails,
             Quantity = defaults.ItemQuantity,
-            UnitPrice = defaults.ItemUnitPrice
+            UnitPrice = defaults.ItemUnitPrice,
+            VatRate = defaults.ItemVatRate
         });
         return View(invoice);
     }

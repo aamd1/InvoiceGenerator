@@ -54,7 +54,8 @@ using (var scope = app.Services.CreateScope())
             ItemDescription = latestItem?.Description ?? "",
             ItemDetails = latestItem?.Details ?? "",
             ItemQuantity = latestItem?.Quantity ?? 1,
-            ItemUnitPrice = latestItem?.UnitPrice ?? 0
+            ItemUnitPrice = latestItem?.UnitPrice ?? 0,
+            ItemVatRate = latestItem?.VatRate ?? latestInvoice?.VatRate ?? 20
         });
         db.SaveChanges();
     }
