@@ -41,7 +41,7 @@ public class InvoicesController(InvoiceDbContext db) : Controller
             ClientPhone = defaults.ClientPhone,
             VatRate = defaults.VatRate,
             Notes = defaults.Notes,
-            BankName = defaults.BankName,
+            BeneficiaryName = defaults.BeneficiaryName,
             Iban = defaults.Iban,
             Bic = defaults.Bic,
             PaymentTerms = defaults.PaymentTerms

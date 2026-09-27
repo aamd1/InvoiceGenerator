@@ -30,7 +30,7 @@ public class Invoice
     [StringLength(40)] public string ClientPhone { get; set; } = "";
     [Range(0, 100)] public decimal VatRate { get; set; } = 20;
     [StringLength(2000)] public string Notes { get; set; } = "";
-    [StringLength(120)] public string BankName { get; set; } = "";
+    [StringLength(120)] public string BeneficiaryName { get; set; } = "";
     [StringLength(80)] public string Iban { get; set; } = "";
     [StringLength(30)] public string Bic { get; set; } = "";
     [StringLength(1000)] public string PaymentTerms { get; set; } = "";
@@ -81,7 +81,7 @@ public class InvoiceSettings
     [StringLength(40)] public string ClientPhone { get; set; } = "";
     public decimal VatRate { get; set; } = 20;
     [StringLength(2000)] public string Notes { get; set; } = "";
-    [StringLength(120)] public string BankName { get; set; } = "";
+    [StringLength(120)] public string BeneficiaryName { get; set; } = "";
     [StringLength(80)] public string Iban { get; set; } = "";
     [StringLength(30)] public string Bic { get; set; } = "";
     [StringLength(1000)] public string PaymentTerms { get; set; } = "";
