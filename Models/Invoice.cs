@@ -9,11 +9,21 @@ public class Invoice
     [DataType(DataType.Date)] public DateTime IssueDate { get; set; } = DateTime.Today;
     [DataType(DataType.Date)] public DateTime DueDate { get; set; } = DateTime.Today.AddDays(14);
     [Required, StringLength(120)] public string CompanyName { get; set; } = "Your Company Ltd.";
-    [StringLength(250)] public string CompanyAddress { get; set; } = "";
+    [StringLength(20)] public string CompanyStreetNumber { get; set; } = "123";
+    [StringLength(150)] public string CompanyStreet { get; set; } = "Business Street";
+    [StringLength(150)] public string? CompanyStreetLine2 { get; set; }
+    [StringLength(20)] public string CompanyPostalCode { get; set; } = "75001";
+    [StringLength(100)] public string CompanyCity { get; set; } = "Paris";
+    [StringLength(100)] public string CompanyCountry { get; set; } = "France";
     [EmailAddress, StringLength(120)] public string CompanyEmail { get; set; } = "";
     [StringLength(40)] public string CompanyPhone { get; set; } = "";
     [Required, StringLength(120)] public string ClientName { get; set; } = "";
-    [StringLength(250)] public string ClientAddress { get; set; } = "";
+    [StringLength(20)] public string ClientStreetNumber { get; set; } = "456";
+    [StringLength(150)] public string ClientStreet { get; set; } = "Client Street";
+    [StringLength(150)] public string? ClientStreetLine2 { get; set; }
+    [StringLength(20)] public string ClientPostalCode { get; set; } = "75002";
+    [StringLength(100)] public string ClientCity { get; set; } = "Paris";
+    [StringLength(100)] public string ClientCountry { get; set; } = "France";
     [EmailAddress, StringLength(120)] public string ClientEmail { get; set; } = "";
     [StringLength(40)] public string ClientPhone { get; set; } = "";
     [Range(0, 100)] public decimal VatRate { get; set; } = 20;
@@ -48,11 +58,21 @@ public class InvoiceSettings
     [StringLength(30)] public string InvoiceNumberPrefix { get; set; } = "INV-";
     public int DueDays { get; set; } = 14;
     [StringLength(120)] public string CompanyName { get; set; } = "Your Company Ltd.";
-    [StringLength(250)] public string CompanyAddress { get; set; } = "";
+    [StringLength(20)] public string CompanyStreetNumber { get; set; } = "123";
+    [StringLength(150)] public string CompanyStreet { get; set; } = "Business Street";
+    [StringLength(150)] public string? CompanyStreetLine2 { get; set; }
+    [StringLength(20)] public string CompanyPostalCode { get; set; } = "75001";
+    [StringLength(100)] public string CompanyCity { get; set; } = "Paris";
+    [StringLength(100)] public string CompanyCountry { get; set; } = "France";
     [StringLength(120)] public string CompanyEmail { get; set; } = "";
     [StringLength(40)] public string CompanyPhone { get; set; } = "";
     [StringLength(120)] public string ClientName { get; set; } = "";
-    [StringLength(250)] public string ClientAddress { get; set; } = "";
+    [StringLength(20)] public string ClientStreetNumber { get; set; } = "456";
+    [StringLength(150)] public string ClientStreet { get; set; } = "Client Street";
+    [StringLength(150)] public string? ClientStreetLine2 { get; set; }
+    [StringLength(20)] public string ClientPostalCode { get; set; } = "75002";
+    [StringLength(100)] public string ClientCity { get; set; } = "Paris";
+    [StringLength(100)] public string ClientCountry { get; set; } = "France";
     [StringLength(120)] public string ClientEmail { get; set; } = "";
     [StringLength(40)] public string ClientPhone { get; set; } = "";
     public decimal VatRate { get; set; } = 20;

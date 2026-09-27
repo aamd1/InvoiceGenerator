@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyInvoiceGenerator.Data;
 
@@ -11,9 +12,11 @@ using MyInvoiceGenerator.Data;
 namespace MyInvoiceGenerator.Migrations
 {
     [DbContext(typeof(InvoiceDbContext))]
-    partial class InvoiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260927120641_SplitPartyAddresses")]
+    partial class SplitPartyAddresses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,6 +42,11 @@ namespace MyInvoiceGenerator.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
+
+                    b.Property<string>("ClientAddress")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("ClientCity")
                         .IsRequired()
@@ -75,14 +83,15 @@ namespace MyInvoiceGenerator.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
-                    b.Property<string>("ClientStreetLine2")
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
                     b.Property<string>("ClientStreetNumber")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
+
+                    b.Property<string>("CompanyAddress")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("CompanyCity")
                         .IsRequired()
@@ -116,10 +125,6 @@ namespace MyInvoiceGenerator.Migrations
 
                     b.Property<string>("CompanyStreet")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
-                    b.Property<string>("CompanyStreetLine2")
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
@@ -221,6 +226,11 @@ namespace MyInvoiceGenerator.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("varchar(30)");
 
+                    b.Property<string>("ClientAddress")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
+
                     b.Property<string>("ClientCity")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -256,14 +266,15 @@ namespace MyInvoiceGenerator.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
-                    b.Property<string>("ClientStreetLine2")
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
                     b.Property<string>("ClientStreetNumber")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
+
+                    b.Property<string>("CompanyAddress")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("varchar(250)");
 
                     b.Property<string>("CompanyCity")
                         .IsRequired()
@@ -297,10 +308,6 @@ namespace MyInvoiceGenerator.Migrations
 
                     b.Property<string>("CompanyStreet")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("varchar(150)");
-
-                    b.Property<string>("CompanyStreetLine2")
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 

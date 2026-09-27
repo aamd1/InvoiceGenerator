@@ -29,14 +29,20 @@
             <div>
                 <h3>From</h3>
                 <p><strong>@Model.CompanyName</strong></p>
-                <p class="pre-line">@Model.CompanyAddress</p>
+                <p>@Model.CompanyStreetNumber @Model.CompanyStreet</p>
+                <p>@Model.CompanyStreetLine2</p>
+                <p>@Model.CompanyPostalCode @Model.CompanyCity</p>
+                <p>@Model.CompanyCountry</p>
                 <p>@Model.CompanyEmail</p>
                 <p>@Model.CompanyPhone</p>
             </div>
             <div class="client">
                 <h3>Bill To</h3>
                 <p><strong>@Model.ClientName</strong></p>
-                <p class="pre-line">@Model.ClientAddress</p>
+                <p>@Model.ClientStreetNumber @Model.ClientStreet</p>
+                <p>@Model.ClientStreetLine2</p>
+                <p>@Model.ClientPostalCode @Model.ClientCity</p>
+                <p>@Model.ClientCountry</p>
                 <p>@Model.ClientEmail</p>
                 <p>@Model.ClientPhone</p>
             </div>

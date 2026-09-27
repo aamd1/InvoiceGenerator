@@ -38,12 +38,12 @@ using (var scope = app.Services.CreateScope())
         db.InvoiceSettings.Add(new InvoiceSettings
         {
             CompanyName = latestInvoice?.CompanyName ?? "Your Company Ltd.",
-            CompanyAddress = latestInvoice?.CompanyAddress ?? "",
             CompanyEmail = latestInvoice?.CompanyEmail ?? "",
+            CompanyStreetLine2 = latestInvoice?.CompanyStreetLine2 ?? "",
             CompanyPhone = latestInvoice?.CompanyPhone ?? "",
             ClientName = latestInvoice?.ClientName ?? "",
-            ClientAddress = latestInvoice?.ClientAddress ?? "",
             ClientEmail = latestInvoice?.ClientEmail ?? "",
+            ClientStreetLine2 = latestInvoice?.ClientStreetLine2 ?? "",
             ClientPhone = latestInvoice?.ClientPhone ?? "",
             VatRate = latestInvoice?.VatRate ?? 20,
             Notes = latestInvoice?.Notes ?? "",
@@ -59,6 +59,19 @@ using (var scope = app.Services.CreateScope())
         });
         db.SaveChanges();
     }
+
+    var settings = db.InvoiceSettings.Single();
+    settings.CompanyStreetNumber = string.IsNullOrWhiteSpace(settings.CompanyStreetNumber) ? "123" : settings.CompanyStreetNumber;
+    settings.CompanyStreet = string.IsNullOrWhiteSpace(settings.CompanyStreet) ? "Business Street" : settings.CompanyStreet;
+    settings.CompanyPostalCode = string.IsNullOrWhiteSpace(settings.CompanyPostalCode) ? "75001" : settings.CompanyPostalCode;
+    settings.CompanyCity = string.IsNullOrWhiteSpace(settings.CompanyCity) ? "Paris" : settings.CompanyCity;
+    settings.CompanyCountry = string.IsNullOrWhiteSpace(settings.CompanyCountry) ? "France" : settings.CompanyCountry;
+    settings.ClientStreetNumber = string.IsNullOrWhiteSpace(settings.ClientStreetNumber) ? "456" : settings.ClientStreetNumber;
+    settings.ClientStreet = string.IsNullOrWhiteSpace(settings.ClientStreet) ? "Client Street" : settings.ClientStreet;
+    settings.ClientPostalCode = string.IsNullOrWhiteSpace(settings.ClientPostalCode) ? "75002" : settings.ClientPostalCode;
+    settings.ClientCity = string.IsNullOrWhiteSpace(settings.ClientCity) ? "Paris" : settings.ClientCity;
+    settings.ClientCountry = string.IsNullOrWhiteSpace(settings.ClientCountry) ? "France" : settings.ClientCountry;
+    db.SaveChanges();
 }
 
 app.MapStaticAssets();

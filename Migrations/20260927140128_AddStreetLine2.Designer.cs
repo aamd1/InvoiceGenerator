@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyInvoiceGenerator.Data;
 
@@ -11,9 +12,11 @@ using MyInvoiceGenerator.Data;
 namespace MyInvoiceGenerator.Migrations
 {
     [DbContext(typeof(InvoiceDbContext))]
-    partial class InvoiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260927140128_AddStreetLine2")]
+    partial class AddStreetLine2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,6 +79,7 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("varchar(150)");
 
                     b.Property<string>("ClientStreetLine2")
+                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
@@ -120,6 +124,7 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("varchar(150)");
 
                     b.Property<string>("CompanyStreetLine2")
+                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
@@ -257,6 +262,7 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("varchar(150)");
 
                     b.Property<string>("ClientStreetLine2")
+                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
@@ -301,6 +307,7 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("varchar(150)");
 
                     b.Property<string>("CompanyStreetLine2")
+                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("varchar(150)");
 
