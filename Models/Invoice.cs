@@ -9,6 +9,7 @@ public class Invoice
     [DataType(DataType.Date)] public DateTime IssueDate { get; set; } = DateTime.Today;
     [DataType(DataType.Date)] public DateTime DueDate { get; set; } = DateTime.Today.AddDays(14);
     [Required, StringLength(120)] public string CompanyName { get; set; } = "Your Company Ltd.";
+    [StringLength(50)] public string CompanyIdNumber { get; set; } = "";
     [StringLength(20)] public string CompanyStreetNumber { get; set; } = "123";
     [StringLength(150)] public string CompanyStreet { get; set; } = "Business Street";
     [StringLength(150)] public string? CompanyStreetLine2 { get; set; }
@@ -18,6 +19,7 @@ public class Invoice
     [EmailAddress, StringLength(120)] public string CompanyEmail { get; set; } = "";
     [StringLength(40)] public string CompanyPhone { get; set; } = "";
     [Required, StringLength(120)] public string ClientName { get; set; } = "";
+    [StringLength(50)] public string ClientIdNumber { get; set; } = "";
     [StringLength(20)] public string ClientStreetNumber { get; set; } = "456";
     [StringLength(150)] public string ClientStreet { get; set; } = "Client Street";
     [StringLength(150)] public string? ClientStreetLine2 { get; set; }
@@ -58,6 +60,7 @@ public class InvoiceSettings
     [StringLength(30)] public string InvoiceNumberPrefix { get; set; } = "INV-";
     public int DueDays { get; set; } = 14;
     [StringLength(120)] public string CompanyName { get; set; } = "Your Company Ltd.";
+    [StringLength(50)] public string CompanyIdNumber { get; set; } = "";
     [StringLength(20)] public string CompanyStreetNumber { get; set; } = "123";
     [StringLength(150)] public string CompanyStreet { get; set; } = "Business Street";
     [StringLength(150)] public string? CompanyStreetLine2 { get; set; }
@@ -67,6 +70,7 @@ public class InvoiceSettings
     [StringLength(120)] public string CompanyEmail { get; set; } = "";
     [StringLength(40)] public string CompanyPhone { get; set; } = "";
     [StringLength(120)] public string ClientName { get; set; } = "";
+    [StringLength(50)] public string ClientIdNumber { get; set; } = "";
     [StringLength(20)] public string ClientStreetNumber { get; set; } = "456";
     [StringLength(150)] public string ClientStreet { get; set; } = "Client Street";
     [StringLength(150)] public string? ClientStreetLine2 { get; set; }

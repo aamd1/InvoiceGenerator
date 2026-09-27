@@ -23,12 +23,15 @@
                     <div><span>Due Date</span><strong>@Model.DueDate.ToString("MMMM d, yyyy")</strong></div>
                 </div>
             </div>
-            <div class="company-logo">@Model.CompanyName</div>
         </header>
         <section class="details">
             <div>
                 <h3>From</h3>
                 <p><strong>@Model.CompanyName</strong></p>
+                @if (!string.IsNullOrWhiteSpace(Model.CompanyIdNumber))
+                {
+                    <p>ID: @Model.CompanyIdNumber</p>
+                }
                 <p>@Model.CompanyStreetNumber @Model.CompanyStreet</p>
                 <p>@Model.CompanyStreetLine2</p>
                 <p>@Model.CompanyPostalCode @Model.CompanyCity</p>
@@ -39,6 +42,10 @@
             <div class="client">
                 <h3>Bill To</h3>
                 <p><strong>@Model.ClientName</strong></p>
+                @if (!string.IsNullOrWhiteSpace(Model.ClientIdNumber))
+                {
+                    <p>ID: @Model.ClientIdNumber</p>
+                }
                 <p>@Model.ClientStreetNumber @Model.ClientStreet</p>
                 <p>@Model.ClientStreetLine2</p>
                 <p>@Model.ClientPostalCode @Model.ClientCity</p>

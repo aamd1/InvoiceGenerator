@@ -38,10 +38,12 @@ using (var scope = app.Services.CreateScope())
         db.InvoiceSettings.Add(new InvoiceSettings
         {
             CompanyName = latestInvoice?.CompanyName ?? "Your Company Ltd.",
+            CompanyIdNumber = latestInvoice?.CompanyIdNumber ?? "",
             CompanyEmail = latestInvoice?.CompanyEmail ?? "",
             CompanyStreetLine2 = latestInvoice?.CompanyStreetLine2 ?? "",
             CompanyPhone = latestInvoice?.CompanyPhone ?? "",
             ClientName = latestInvoice?.ClientName ?? "",
+            ClientIdNumber = latestInvoice?.ClientIdNumber ?? "",
             ClientEmail = latestInvoice?.ClientEmail ?? "",
             ClientStreetLine2 = latestInvoice?.ClientStreetLine2 ?? "",
             ClientPhone = latestInvoice?.ClientPhone ?? "",
@@ -66,11 +68,13 @@ using (var scope = app.Services.CreateScope())
     settings.CompanyPostalCode = string.IsNullOrWhiteSpace(settings.CompanyPostalCode) ? "75001" : settings.CompanyPostalCode;
     settings.CompanyCity = string.IsNullOrWhiteSpace(settings.CompanyCity) ? "Paris" : settings.CompanyCity;
     settings.CompanyCountry = string.IsNullOrWhiteSpace(settings.CompanyCountry) ? "France" : settings.CompanyCountry;
+    settings.CompanyIdNumber = string.IsNullOrWhiteSpace(settings.CompanyIdNumber) ? "COMP-001" : settings.CompanyIdNumber;
     settings.ClientStreetNumber = string.IsNullOrWhiteSpace(settings.ClientStreetNumber) ? "456" : settings.ClientStreetNumber;
     settings.ClientStreet = string.IsNullOrWhiteSpace(settings.ClientStreet) ? "Client Street" : settings.ClientStreet;
     settings.ClientPostalCode = string.IsNullOrWhiteSpace(settings.ClientPostalCode) ? "75002" : settings.ClientPostalCode;
     settings.ClientCity = string.IsNullOrWhiteSpace(settings.ClientCity) ? "Paris" : settings.ClientCity;
     settings.ClientCountry = string.IsNullOrWhiteSpace(settings.ClientCountry) ? "France" : settings.ClientCountry;
+    settings.ClientIdNumber = string.IsNullOrWhiteSpace(settings.ClientIdNumber) ? "CLIENT-001" : settings.ClientIdNumber;
     db.SaveChanges();
 }
 
