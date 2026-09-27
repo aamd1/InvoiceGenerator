@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <header class="site-header no-print"><nav class="site-nav"><a class="brand" asp-controller="Invoices" asp-action="Index">Invoice Studio</a><a class="nav-link" asp-controller="Invoices" asp-action="Index">Invoices</a></nav></header>
+    <header class="site-header no-print"><nav class="site-nav"><a class="brand" asp-controller="Invoices" asp-action="Index">Invoice Studio</a><span class="nav-links"><a class="nav-link" asp-controller="Invoices" asp-action="Index">Invoices</a><a class="nav-link" asp-controller="Settings" asp-action="Edit">Defaults</a></span></nav></header>
     <div class="app-shell"><main role="main">@RenderBody()</main></div>
     <footer class="site-footer no-print">Invoice Studio - Simple invoice management</footer>
     @await RenderSectionAsync("Scripts", required: false)

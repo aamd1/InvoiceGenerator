@@ -39,3 +39,28 @@ public class InvoiceItem
     [Range(0, 100000000)] public decimal UnitPrice { get; set; }
     public decimal Amount => Quantity * UnitPrice;
 }
+
+public class InvoiceSettings
+{
+    public int Id { get; set; }
+    [StringLength(30)] public string InvoiceNumberPrefix { get; set; } = "INV-";
+    public int DueDays { get; set; } = 14;
+    [StringLength(120)] public string CompanyName { get; set; } = "Your Company Ltd.";
+    [StringLength(250)] public string CompanyAddress { get; set; } = "";
+    [StringLength(120)] public string CompanyEmail { get; set; } = "";
+    [StringLength(40)] public string CompanyPhone { get; set; } = "";
+    [StringLength(120)] public string ClientName { get; set; } = "";
+    [StringLength(250)] public string ClientAddress { get; set; } = "";
+    [StringLength(120)] public string ClientEmail { get; set; } = "";
+    [StringLength(40)] public string ClientPhone { get; set; } = "";
+    public decimal VatRate { get; set; } = 20;
+    [StringLength(2000)] public string Notes { get; set; } = "";
+    [StringLength(120)] public string BankName { get; set; } = "";
+    [StringLength(80)] public string Iban { get; set; } = "";
+    [StringLength(30)] public string Bic { get; set; } = "";
+    [StringLength(1000)] public string PaymentTerms { get; set; } = "";
+    [StringLength(200)] public string ItemDescription { get; set; } = "";
+    [StringLength(500)] public string ItemDetails { get; set; } = "";
+    public decimal ItemQuantity { get; set; } = 1;
+    public decimal ItemUnitPrice { get; set; }
+}

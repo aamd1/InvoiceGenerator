@@ -11,10 +11,36 @@ public class InvoicesController(InvoiceDbContext db) : Controller
     public async Task<IActionResult> Index() => View(await db.Invoices.OrderByDescending(invoice => invoice.IssueDate).ToListAsync());
 
     [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
-        var invoice = new Invoice { InvoiceNumber = $"INV-{DateTime.UtcNow:yyyyMMddHHmmss}" };
-        invoice.Items.Add(new InvoiceItem());
+        var defaults = await db.InvoiceSettings.AsNoTracking().SingleAsync();
+
+        var invoice = new Invoice
+        {
+            InvoiceNumber = $"{defaults.InvoiceNumberPrefix}{DateTime.UtcNow:yyyyMMddHHmmss}",
+            DueDate = DateTime.Today.AddDays(defaults.DueDays),
+            CompanyName = defaults.CompanyName,
+            CompanyAddress = defaults.CompanyAddress,
+            CompanyEmail = defaults.CompanyEmail,
+            CompanyPhone = defaults.CompanyPhone,
+            ClientName = defaults.ClientName,
+            ClientAddress = defaults.ClientAddress,
+            ClientEmail = defaults.ClientEmail,
+            ClientPhone = defaults.ClientPhone,
+            VatRate = defaults.VatRate,
+            Notes = defaults.Notes,
+            BankName = defaults.BankName,
+            Iban = defaults.Iban,
+            Bic = defaults.Bic,
+            PaymentTerms = defaults.PaymentTerms
+        };
+        invoice.Items.Add(new InvoiceItem
+        {
+            Description = defaults.ItemDescription,
+            Details = defaults.ItemDetails,
+            Quantity = defaults.ItemQuantity,
+            UnitPrice = defaults.ItemUnitPrice
+        });
         return View(invoice);
     }
 
