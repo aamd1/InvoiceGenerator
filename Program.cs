@@ -24,13 +24,7 @@ app.UseAuthorization();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<InvoiceDbContext>();
-    var retries = 0;
-    while (true)
-    {
-        try { db.Database.Migrate(); break; }
-        catch when (retries++ < 12) { Thread.Sleep(TimeSpan.FromSeconds(2)); }
-    }
-
+    db.Database.Migrate();
     if (!db.InvoiceSettings.Any())
     {
         var latestInvoice = db.Invoices.OrderByDescending(invoice => invoice.Id).FirstOrDefault();
