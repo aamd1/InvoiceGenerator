@@ -17,8 +17,8 @@ public class Invoice
     [StringLength(20)] public string CompanyPostalCode { get; set; } = "75001";
     [StringLength(100)] public string CompanyCity { get; set; } = "Paris";
     [StringLength(100)] public string CompanyCountry { get; set; } = "France";
-    [EmailAddress, StringLength(120)] public string CompanyEmail { get; set; } = "";
-    [StringLength(40)] public string CompanyPhone { get; set; } = "";
+    [EmailAddress, StringLength(120)] public string? CompanyEmail { get; set; }
+    [StringLength(40)] public string? CompanyPhone { get; set; }
     [Required, StringLength(120)] public string ClientName { get; set; } = "";
     [StringLength(50)] public string ClientIdNumber { get; set; } = "";
     [StringLength(20)] public string ClientStreetNumber { get; set; } = "456";
@@ -28,13 +28,13 @@ public class Invoice
     [StringLength(100)] public string ClientCity { get; set; } = "Paris";
     [StringLength(100)] public string ClientCountry { get; set; } = "France";
     [EmailAddress, StringLength(120)] public string ClientEmail { get; set; } = "";
-    [StringLength(40)] public string ClientPhone { get; set; } = "";
+    [StringLength(40)] public string? ClientPhone { get; set; }
     [Range(0, 100)] public decimal VatRate { get; set; } = 20;
     [StringLength(2000)] public string Notes { get; set; } = "";
     [StringLength(120)] public string BeneficiaryName { get; set; } = "";
     [StringLength(80)] public string Iban { get; set; } = "";
     [StringLength(30)] public string Bic { get; set; } = "";
-    [StringLength(1000)] public string PaymentTerms { get; set; } = "";
+    [StringLength(1000)] public string? PaymentTerms { get; set; }
     public List<InvoiceItem> Items { get; set; } = new();
     public decimal Subtotal => Items.Sum(item => item.Quantity * item.UnitPrice);
     public decimal VatAmount => Items.Sum(item => item.VatAmount);
@@ -47,7 +47,7 @@ public class InvoiceItem
     public int InvoiceId { get; set; }
     public Invoice? Invoice { get; set; }
     [Required, StringLength(200)] public string Description { get; set; } = "";
-    [StringLength(500)] public string Details { get; set; } = "";
+    [StringLength(500)] public string? Details { get; set; }
     [Range(0.01, 1000000)] public decimal Quantity { get; set; } = 1;
     [Range(0, 100000000)] public decimal UnitPrice { get; set; }
     [Range(0, 100)] public decimal VatRate { get; set; } = 20;
@@ -69,8 +69,8 @@ public class InvoiceSettings
     [StringLength(20)] public string CompanyPostalCode { get; set; } = "75001";
     [StringLength(100)] public string CompanyCity { get; set; } = "Paris";
     [StringLength(100)] public string CompanyCountry { get; set; } = "France";
-    [StringLength(120)] public string CompanyEmail { get; set; } = "";
-    [StringLength(40)] public string CompanyPhone { get; set; } = "";
+    [StringLength(120)] public string? CompanyEmail { get; set; }
+    [StringLength(40)] public string? CompanyPhone { get; set; }
     [StringLength(120)] public string ClientName { get; set; } = "";
     [StringLength(50)] public string ClientIdNumber { get; set; } = "";
     [StringLength(20)] public string ClientStreetNumber { get; set; } = "456";
@@ -80,13 +80,13 @@ public class InvoiceSettings
     [StringLength(100)] public string ClientCity { get; set; } = "Paris";
     [StringLength(100)] public string ClientCountry { get; set; } = "France";
     [StringLength(120)] public string ClientEmail { get; set; } = "";
-    [StringLength(40)] public string ClientPhone { get; set; } = "";
+    [StringLength(40)] public string? ClientPhone { get; set; }
     public decimal VatRate { get; set; } = 20;
     [StringLength(2000)] public string Notes { get; set; } = "";
     [StringLength(120)] public string BeneficiaryName { get; set; } = "";
     [StringLength(80)] public string Iban { get; set; } = "";
     [StringLength(30)] public string Bic { get; set; } = "";
-    [StringLength(1000)] public string PaymentTerms { get; set; } = "";
+    [StringLength(1000)] public string? PaymentTerms { get; set; }
     [StringLength(200)] public string ItemDescription { get; set; } = "";
     [StringLength(500)] public string ItemDetails { get; set; } = "";
     public decimal ItemQuantity { get; set; } = 1;

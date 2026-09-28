@@ -66,7 +66,6 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("ClientPhone")
-                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
@@ -100,7 +99,6 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("CompanyEmail")
-                        .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
@@ -115,7 +113,6 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("CompanyPhone")
-                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
@@ -165,7 +162,6 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("PaymentTerms")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
@@ -192,7 +188,6 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Details")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -262,7 +257,6 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("ClientPhone")
-                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
@@ -296,7 +290,6 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("CompanyEmail")
-                        .IsRequired()
                         .HasMaxLength(120)
                         .HasColumnType("nvarchar(120)");
 
@@ -311,7 +304,6 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("nvarchar(120)");
 
                     b.Property<string>("CompanyPhone")
-                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
@@ -380,7 +372,6 @@ namespace MyInvoiceGenerator.Migrations
                         .HasColumnType("nvarchar(2000)");
 
                     b.Property<string>("PaymentTerms")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
