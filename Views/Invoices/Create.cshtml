@@ -1,16 +1,46 @@
 @model MyInvoiceGenerator.Models.Invoice
-@{ ViewData["Title"] = "New invoice"; }
+@{ ViewData["Title"] = "New invoice"; var dateFormat = Model.Language == "fr" ? "dd/MM/yyyy" : "MM/dd/yyyy"; }
 <div class="page-heading"><div><p class="eyebrow">Invoice builder</p><h1>New invoice</h1></div><a class="text-link" asp-action="Index">Back to invoices</a></div>
 <form asp-action="Create" method="post" class="form-layout">
     <div asp-validation-summary="All" class="validation"></div>
     <input asp-for="Language" type="hidden" />
-    <section class="panel form-section"><h2>Invoice details</h2><div class="form-grid three"><label>Invoice number<input asp-for="InvoiceNumber" /></label><label>Issue date<input asp-for="IssueDate" /></label><label>Due date<input asp-for="DueDate" /></label></div></section>
+    <section class="panel form-section"><h2>Invoice details</h2><div class="form-grid three"><label>Invoice number<input asp-for="InvoiceNumber" /></label><label>Issue date<input asp-for="IssueDate" type="hidden" /><input id="IssueDateDisplay" type="text" value="@Model.IssueDate.ToString(dateFormat)" placeholder="@dateFormat" inputmode="numeric" autocomplete="off" required /></label><label>Due date<input asp-for="DueDate" type="hidden" /><input id="DueDateDisplay" type="text" value="@Model.DueDate.ToString(dateFormat)" placeholder="@dateFormat" inputmode="numeric" autocomplete="off" required /></label></div></section>
     <section class="panel form-section"><h2>Parties</h2><div class="form-grid two"><fieldset><legend>From</legend><label>Company name<input asp-for="CompanyName" /></label><label>Company ID number<input asp-for="CompanyIdNumber" /></label><div class="address-grid"><label>Number<input asp-for="CompanyStreetNumber" /></label><label>Street<input asp-for="CompanyStreet" /></label><label>Street line 2<input asp-for="CompanyStreetLine2" /></label><label>Postal code<input asp-for="CompanyPostalCode" /></label><label>City<input asp-for="CompanyCity" /></label><label>Country<input asp-for="CompanyCountry" /></label></div><label>Email<input asp-for="CompanyEmail" data-val="false" /></label><label>Phone<input asp-for="CompanyPhone" data-val="false" /></label></fieldset><fieldset><legend>Bill to</legend><label>Client name<input asp-for="ClientName" /></label><label>Client ID number<input asp-for="ClientIdNumber" /></label><div class="address-grid"><label>Number<input asp-for="ClientStreetNumber" /></label><label>Street<input asp-for="ClientStreet" /></label><label>Street line 2<input asp-for="ClientStreetLine2" /></label><label>Postal code<input asp-for="ClientPostalCode" /></label><label>City<input asp-for="ClientCity" /></label><label>Country<input asp-for="ClientCountry" /></label></div><label>Email<input asp-for="ClientEmail" /></label><label>Phone<input asp-for="ClientPhone" data-val="false" /></label></fieldset></div></section>
     <section class="panel form-section"><div class="section-heading"><h2>Line items</h2><button type="button" class="button secondary" id="add-item">Add item</button></div><div id="items">@for (var index = 0; index < Model.Items.Count; index++) { <div class="item-row"><label>Description<input asp-for="Items[index].Description" required /></label><label>Details<input asp-for="Items[index].Details" data-val="false" /></label><label>Qty<input asp-for="Items[index].Quantity" type="number" min="0.01" step="0.01" required /></label><label>Unit price<input asp-for="Items[index].UnitPrice" type="number" min="0" step="0.01" required /></label><label>VAT (%)<input asp-for="Items[index].VatRate" type="number" min="0" max="100" step="0.01" required /></label><button type="button" class="icon-button remove-item" title="Remove item">×</button></div>}</div></section>
     <section class="panel form-section"><h2>Totals and payment</h2><div class="form-grid two"><div><label>VAT rate (%)<input asp-for="VatRate" type="number" min="0" max="100" step="0.01" /></label><label>Notes<textarea asp-for="Notes" rows="4"></textarea></label></div><div><label>Beneficiary name<input asp-for="BeneficiaryName" /></label><label>IBAN<input asp-for="Iban" /></label><label>BIC<input asp-for="Bic" /></label><label>Payment terms<textarea asp-for="PaymentTerms" rows="3" data-val="false"></textarea></label></div></div></section>
     <div class="actions"><a class="text-link" asp-action="Index">Cancel</a><button class="button" type="submit">Save and generate invoice</button></div>
 </form>
 @section Scripts { <partial name="_ValidationScriptsPartial" /><script>
+const frenchDates = @((Model.Language == "fr").ToString().ToLowerInvariant());
+const dateFields = [['IssueDateDisplay', 'IssueDate'], ['DueDateDisplay', 'DueDate']];
+const invoiceForm = document.querySelector('form');
+function updateDate(displayId, fieldName) {
+    const display = document.getElementById(displayId);
+    const match = display.value.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    if (!match) {
+        display.setCustomValidity(frenchDates ? 'Saisissez une date au format JJ/MM/AAAA.' : 'Enter a date in MM/DD/YYYY format.');
+        return false;
+    }
+    const first = Number(match[1]);
+    const second = Number(match[2]);
+    const year = Number(match[3]);
+    const month = frenchDates ? second : first;
+    const day = frenchDates ? first : second;
+    const parsed = new Date(year, month - 1, day);
+    if (parsed.getFullYear() !== year || parsed.getMonth() !== month - 1 || parsed.getDate() !== day) {
+        display.setCustomValidity(frenchDates ? 'Saisissez une date valide.' : 'Enter a valid date.');
+        return false;
+    }
+    document.getElementById(fieldName).value = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    display.setCustomValidity('');
+    return true;
+}
+dateFields.forEach(([displayId, fieldName]) => {
+    document.getElementById(displayId).addEventListener('input', () => updateDate(displayId, fieldName));
+});
+invoiceForm.addEventListener('submit', event => {
+    if (!dateFields.every(([displayId, fieldName]) => updateDate(displayId, fieldName))) event.preventDefault();
+});
 let itemIndex = @Model.Items.Count; const items = document.getElementById('items');
 document.getElementById('add-item').addEventListener('click', () => { const row = document.createElement('div'); row.className = 'item-row'; row.innerHTML = `<label>Description<input name="Items[${itemIndex}].Description" required></label><label>Details<input name="Items[${itemIndex}].Details" data-val="false"></label><label>Qty<input name="Items[${itemIndex}].Quantity" type="number" min="0.01" step="0.01" value="1" required></label><label>Unit price<input name="Items[${itemIndex}].UnitPrice" type="number" min="0" step="0.01" required></label><label>VAT (%)<input name="Items[${itemIndex}].VatRate" type="number" min="0" max="100" step="0.01" value="20" required></label><button type="button" class="icon-button remove-item" title="Remove item">×</button>`; items.appendChild(row); itemIndex++; });
 items.addEventListener('click', event => { if (event.target.classList.contains('remove-item')) event.target.closest('.item-row').remove(); });

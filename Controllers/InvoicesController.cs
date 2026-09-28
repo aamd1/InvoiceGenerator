@@ -14,10 +14,19 @@ public class InvoicesController(InvoiceDbContext db) : Controller
     public async Task<IActionResult> Create()
     {
         var defaults = await db.InvoiceSettings.AsNoTracking().SingleAsync();
+        var monthPrefix = $"INV-{DateTime.Today:yyyyMM}-";
+        var existingInvoiceNumbers = await db.Invoices.AsNoTracking()
+            .Where(invoice => invoice.InvoiceNumber.StartsWith(monthPrefix))
+            .Select(invoice => invoice.InvoiceNumber)
+            .ToListAsync();
+        var nextInvoiceNumber = existingInvoiceNumbers
+            .Select(number => int.TryParse(number[monthPrefix.Length..], out var sequence) ? sequence : 0)
+            .DefaultIfEmpty()
+            .Max() + 1;
 
         var invoice = new Invoice
         {
-            InvoiceNumber = $"{defaults.InvoiceNumberPrefix}{DateTime.UtcNow:yyyyMMddHHmmss}",
+            InvoiceNumber = $"{monthPrefix}{nextInvoiceNumber:000}",
             Language = defaults.Language == "fr" ? "fr" : "en",
             DueDate = DateTime.Today.AddDays(defaults.DueDays),
             CompanyName = defaults.CompanyName,
